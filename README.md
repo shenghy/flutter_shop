@@ -15,6 +15,7 @@
 
 ## 知识架构图
 ![alt](http://blogimages.jspang.com/flutter_shop_01.gif)
+![alt](http://blogimages.jspang.com/flutter_shop_02.gif)
 
 
 
