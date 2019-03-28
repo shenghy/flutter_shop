@@ -6,28 +6,47 @@
 
 目前项目还在开发当中，配有完整的视频和文字教程，是你Flutter进阶必备项目。
 
-
-## 图片展示
-
 ## 教程文章地址
 
 教程文章地址(60节，超5万字教程，持续更新中)：[https://jspang.com/post/FlutterShop.html](https://jspang.com/post/FlutterShop.html)
 
-## 知识架构图
+## 用到的组件
+
+- dio:用于向后端接口作HTTP请求数据
+- flutter_swiper: 轮播插件，制作了商城首页的轮播效果
+- flutter_screenutil:用于不同屏幕的适配，一次设计，适配所有屏幕
+- url_launcher:用于打开网页和实现原生电话的拨打
+- flutter_easyrefresh：下拉刷新或者上拉加载插件，方便好用，可定制。
+- provide：谷歌最新推出的Flutter状态管理插件，亲儿子，用的爽。
+- fluttertoast：Toast轻提示插件，APP必不可少，IOS和Android通用。
+
+
+## 图片展示
+
 ![alt](http://blogimages.jspang.com/flutter_shop_01.gif)
 ![alt](http://blogimages.jspang.com/flutter_shop_02.gif)
 
+## 更新日志：
 
 
-## Getting Started
+- 第一次上传项目到GitHub上，我已经写了35课教程，把首页和商品分类页面制作完成。[2019/3/28]
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## 知识架构图
+
+
+## 一起学习
+
+我建立了一个QQ群，大家一起学习:
+
+**qq群：806799257**
+
+入群问题：Flutter出自于哪个公司？
+
+入群答案：google (注意全小写，最好用电脑端加入，移动端Bug)
+
+
+
+
