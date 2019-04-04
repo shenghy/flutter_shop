@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../routers/application.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -158,7 +159,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
        List<Widget> listWidget = hotGoodsList.map((val){
           
           return InkWell(
-            onTap:(){print('点击了火爆商品');},
+            onTap:(){
+              Application.router.navigateTo(context,"/detail?id=${val['goodsId']}");
+            },
             child: 
             Container(
               width: ScreenUtil().setWidth(372),
@@ -236,7 +239,12 @@ class SwiperDiy extends StatelessWidget{
       child: Swiper(
         itemBuilder: (BuildContext context,int index){
           return InkWell(
-            onTap: (){print('点击了第${index}图片');},
+            onTap: (){
+              
+             
+               Application.router.navigateTo(context,"/detail?id=${swiperDataList[index]['goodsId']}");
+
+            },
             child:  Image.network("${swiperDataList[index]['image']}",fit:BoxFit.fill),
           );
          
@@ -349,7 +357,7 @@ class Recommend extends StatelessWidget {
        child: Column(
          children: <Widget>[
            _titleWidget(),
-           _recommedList()
+           _recommedList(context)
          ],
        ),
     );
@@ -373,7 +381,7 @@ class Recommend extends StatelessWidget {
      );
   }
 
-  Widget _recommedList(){
+  Widget _recommedList(BuildContext context){
 
       return  Container(
         height: ScreenUtil().setHeight(350),
@@ -381,15 +389,17 @@ class Recommend extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,
           itemBuilder: (context,index){
-            return _item(index);
+            return _item(index,context);
           },
         ),
       );
   }
 
-  Widget _item(index){
+  Widget _item(index,context){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+         Application.router.navigateTo(context,"/detail?id=${recommendList[index]['goodsId']}");
+      },
       child: Container(
         height: ScreenUtil().setHeight(340),
         width: ScreenUtil().setWidth(280),
@@ -445,42 +455,44 @@ class FloorContent extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          _firstRow(),
-          _otherGoods()
+          _firstRow(context),
+          _otherGoods(context)
         ],
       ),
     );
   }
 
-  Widget _firstRow(){
+  Widget _firstRow(context){
     return Row(
       children: <Widget>[
-        _goodsItem(floorGoodsList[0]),
+        _goodsItem(context,floorGoodsList[0]),
         Column(
           children: <Widget>[
-           _goodsItem(floorGoodsList[1]),
-           _goodsItem(floorGoodsList[2]),
+           _goodsItem(context,floorGoodsList[1]),
+           _goodsItem(context,floorGoodsList[2]),
           ],
         )
       ],
     );
   }
 
-  Widget _otherGoods(){
+  Widget _otherGoods(context){
     return Row(
       children: <Widget>[
-       _goodsItem(floorGoodsList[3]),
-       _goodsItem(floorGoodsList[4]),
+       _goodsItem(context,floorGoodsList[3]),
+       _goodsItem(context,floorGoodsList[4]),
       ],
     );
   }
 
-  Widget _goodsItem(Map goods){
+  Widget _goodsItem(context,Map goods){
 
     return Container(
       width:ScreenUtil().setWidth(375),
       child: InkWell(
-        onTap:(){print('点击了楼层商品');},
+        onTap:(){
+          Application.router.navigateTo(context, "/detail?id=${goods['goodsId']}");
+        },
         child: Image.network(goods['image']),
       ),
     );

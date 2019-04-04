@@ -256,14 +256,14 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
         builder: (context,child,data){
-try{
-  if(Provide.value<ChildCategory>(context).page==1){
-    scrollController.jumpTo(0.0);
-  }
-}catch(e){
-  print('进入页面第一次初始化：${e}');
-}
-          
+          try{
+            if(Provide.value<ChildCategory>(context).page==1){
+              scrollController.jumpTo(0.0);
+            }
+          }catch(e){
+            print('进入页面第一次初始化：${e}');
+          }
+                    
           if(data.goodsList.length>0){
              return Expanded(
                 child:Container(
