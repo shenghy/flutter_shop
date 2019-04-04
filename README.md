@@ -23,8 +23,8 @@
 
 ## 图片展示
 
-![alt](http://blogimages.jspang.com/flutter_shop_01.gif)
-![alt](http://blogimages.jspang.com/flutter_shop_02.gif)
+![商城图片](http://blogimages.jspang.com/Flutter_shop_01.jpg)
+
 
 ## 更新日志：
 
