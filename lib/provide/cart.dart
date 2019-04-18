@@ -176,21 +176,15 @@ class CartProvide with ChangeNotifier{
     int tempIndex =0;
     int changeIndex=0;
     tempList.forEach((item){
-         
          if(item['goodsId']==cartItem.goodsId){
-          changeIndex=tempIndex;
-          
+          changeIndex=tempIndex; 
          }
          tempIndex++;
      });
-
      if(todo=='add'){
        cartItem.count++;
-     }else{
-        if( cartItem.count>1){
-          cartItem.count--;
-        }
-        
+     }else if(cartItem.count>1){
+       cartItem.count--;
      }
      tempList[changeIndex]=cartItem.toJson();
      cartString= json.encode(tempList).toString();
