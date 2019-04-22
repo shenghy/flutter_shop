@@ -7,6 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../routers/application.dart';
 
+//--------
+import 'package:provide/provide.dart';
+import '../provide/child_category.dart';
+import '../provide/currentIndex.dart';
+import '../model/category.dart';
+
 
 class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
@@ -160,6 +166,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           
           return InkWell(
             onTap:(){
+
               Application.router.navigateTo(context,"/detail?id=${val['goodsId']}");
             },
             child: 
@@ -262,9 +269,12 @@ class SwiperDiy extends StatelessWidget{
 class TopNavigator extends StatelessWidget {
   final List navigatorList;
   TopNavigator({Key key, this.navigatorList}) : super(key: key);
-  Widget _gridViewItemUI(BuildContext context,item){
+  Widget _gridViewItemUI(BuildContext context,item,index){
+    // print('------------------${item}');
     return InkWell(
-      onTap: (){print('点击了导航');},
+      onTap: (){
+        _goCategory(context,index,item['mallCategoryId']);
+      },
       child: Column(
         children: <Widget>[
           Image.network(item['image'],width:ScreenUtil().setWidth(95)),
@@ -274,12 +284,24 @@ class TopNavigator extends StatelessWidget {
     );
   }
 
+  void _goCategory(context,int index,String categroyId) async {
+    await request('getCategory').then((val) {
+      var data = json.decode(val.toString());
+      CategoryModel category = CategoryModel.fromJson(data);
+      List   list = category.data;
+      Provide.value<ChildCategory>(context).changeCategory(categroyId,index);
+      Provide.value<ChildCategory>(context).getChildCategory( list[index].bxMallSubDto,categroyId);
+      Provide.value<CurrentIndexProvide>(context).changeIndex(1);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
     if(navigatorList.length>10){
       navigatorList.removeRange(10, navigatorList.length);
     }
+    var tempIndex=-1;
     return Container(
        color:Colors.white,
       margin: EdgeInsets.only(top: 5.0),
@@ -290,7 +312,9 @@ class TopNavigator extends StatelessWidget {
         crossAxisCount: 5,
         padding: EdgeInsets.all(4.0),
         children: navigatorList.map((item){
-          return _gridViewItemUI(context, item);
+          tempIndex++;
+          return _gridViewItemUI(context, item,tempIndex);
+          
         }).toList(),
       ),
     );

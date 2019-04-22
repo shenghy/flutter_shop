@@ -56,23 +56,33 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   @override
   void initState() {
     _getCategory();
-    _getGoodList();
+    
+   
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: ScreenUtil().setWidth(180),
-      decoration: BoxDecoration(
-          border: Border(right: BorderSide(width: 1, color: Colors.black12))),
-      child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return _leftInkWel(index);
-        },
-      ),
-    );
+
+    return Provide<ChildCategory>(
+    
+      builder: (context,child,val){
+         _getGoodList(context);
+         listIndex=val.categoryIndex;
+          
+        return Container(
+            width: ScreenUtil().setWidth(180),
+            decoration: BoxDecoration(
+                border: Border(right: BorderSide(width: 1, color: Colors.black12))),
+            child: ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return _leftInkWel(index);
+              },
+            ),
+          );
+      },
+    ); 
   }
 
   Widget _leftInkWel(int index) {
@@ -82,14 +92,12 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     return InkWell(
       onTap: () {
        
-         setState(() {
-           listIndex=index;
-         });
+         
          var childList = list[index].bxMallSubDto;
          var categoryId= list[index].mallCategoryId;
-        
+         Provide.value<ChildCategory>(context).changeCategory(categoryId,index);
          Provide.value<ChildCategory>(context).getChildCategory(childList,categoryId);
-          _getGoodList(categoryId:categoryId );
+          _getGoodList(context,categoryId:categoryId );
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -125,13 +133,16 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     });
   }
   //得到商品列表数据
-   void _getGoodList({String categoryId }) {
-     
+   void _getGoodList(context,{String categoryId }) {
+  
+  
     var data={
-      'categoryId':categoryId==null?'4':categoryId,
-      'categorySubId':"",
+      'categoryId':categoryId==null?Provide.value<ChildCategory>(context).categoryId:categoryId,
+      'categorySubId':Provide.value<ChildCategory>(context).subId,
       'page':1
     };
+
+
     
     request('getMallGoods',formData:data ).then((val){
         var  data = json.decode(val.toString());
@@ -193,8 +204,9 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     
     return InkWell(
       onTap: (){
+        print (2222222222);
          Provide.value<ChildCategory>(context).changeChildIndex(index,item.mallSubId);
-         _getGoodList(item.mallSubId);
+         _getGoodList(context,item.mallSubId);
       },
       child: Container(
         padding:EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
@@ -212,7 +224,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 
 
    //得到商品列表数据
-   void _getGoodList(String categorySubId) {
+   void _getGoodList(context,String categorySubId) {
      
     var data={
       'categoryId':Provide.value<ChildCategory>(context).categoryId,
