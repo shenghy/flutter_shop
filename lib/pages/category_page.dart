@@ -9,6 +9,7 @@ import 'package:provide/provide.dart';
 import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../routers/application.dart';
 
 
 
@@ -362,7 +363,9 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   
 
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Application.router.navigateTo(context,"/detail?id=${newList[index].goodsId}");
+      },
       child: Container(
         padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
         decoration: BoxDecoration(

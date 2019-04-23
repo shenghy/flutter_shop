@@ -375,16 +375,16 @@ class Recommend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-       
-       margin: EdgeInsets.only(top: 10.0),
-       child: Column(
-         children: <Widget>[
-           _titleWidget(),
-           _recommedList(context)
-         ],
-       ),
-    );
+    return  Container(
+        margin: EdgeInsets.only(top: 10.0),
+        child: Column(
+          children: <Widget>[
+            _titleWidget(),
+            _recommedList(context)
+          ],
+        ),
+      );
+   
   }
 
 //推荐商品标题
@@ -408,7 +408,8 @@ class Recommend extends StatelessWidget {
   Widget _recommedList(BuildContext context){
 
       return  Container(
-        height: ScreenUtil().setHeight(350),
+        height: ScreenUtil().setHeight(380),
+       
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,
@@ -425,7 +426,7 @@ class Recommend extends StatelessWidget {
          Application.router.navigateTo(context,"/detail?id=${recommendList[index]['goodsId']}");
       },
       child: Container(
-        height: ScreenUtil().setHeight(340),
+       
         width: ScreenUtil().setWidth(280),
         padding: EdgeInsets.all(8.0),
         decoration:BoxDecoration(
