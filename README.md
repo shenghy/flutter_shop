@@ -12,7 +12,16 @@
 ```
 
 - 使用 fvm 管理 flutter 版本. 
+- fix service url: lib/config/service_url.dart
 
+```dart
+
+//const serviceUrl= 'http://v.jspang.com:8088/baixing/';
+const serviceUrl= 'https://wxmini.baixingliangfan.cn/baixing/';
+//const serviceUrl= 'http://test.baixingliangfan.cn/baixing/';
+
+
+```
 
 --------------------------------------------------------------
 
