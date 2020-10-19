@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // todo: 路由
     final router = Router();
     Routes.configureRoutes(router);
     Application.router=router;
@@ -53,6 +54,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor:Colors.pink,
         ),
+
+        // todo: 首页入口
         home:IndexPage()
       ),
     );

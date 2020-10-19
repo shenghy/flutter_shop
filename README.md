@@ -26,7 +26,6 @@ Engine • revision ee76268252
 Tools • Dart 2.8.4
 
 
-
 {
   "flutterSdkVersion": "1.17.5"
 }
@@ -43,6 +42,21 @@ const serviceUrl= 'https://wxmini.baixingliangfan.cn/baixing/';
 
 
 ```
+
+## notes: 
+
+- 代码跟踪: 
+
+```bash
+
+- lib/main.dart
+    - lib/pages/index_page.dart  // 底部 tab bar 导航栏
+        - lib/pages/home_page.dart // 首页
+        - lib/pages/category_page.dart // 分类页
+
+```
+
+
 
 --------------------------------------------------------------
 
