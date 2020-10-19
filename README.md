@@ -2,16 +2,37 @@
 
 # hotfix: 
 
-- flutter 版本修复: 
+- 指定 flutter 版本: `1.17.5`
+- 修复编译报错: 依赖包版本问题
+
+## 运行: 
+
+```bash 
+
+flutter run 
+
+```
+
+## 修复编译报错:
+
+- flutter 版本: 使用 fvm 管理 flutter 版本. 
 
 ```bash
+
+-> % flutter --version
+Flutter 1.17.5 • channel unknown • unknown source
+Framework • revision 8af6b2f038 (4 months ago) • 2020-06-30 12:53:55 -0700
+Engine • revision ee76268252
+Tools • Dart 2.8.4
+
+
+
 {
   "flutterSdkVersion": "1.17.5"
 }
 
 ```
 
-- 使用 fvm 管理 flutter 版本. 
 - fix service url: lib/config/service_url.dart
 
 ```dart

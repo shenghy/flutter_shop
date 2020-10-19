@@ -19,7 +19,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
-  dio: 2.0.7
+
+  # http 此包版本, 不可随意升级, 3.0.x 有 HTTPS 证书问题.(且 API 变更)
+  dio: ^2.0.7
+
   flutter_swiper:
   flutter_screenutil:
   url_launcher:
