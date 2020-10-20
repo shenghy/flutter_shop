@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 
-class Application{
+// todo: 有点多余的定义写法.
+class Application {
   static Router router;
 }
