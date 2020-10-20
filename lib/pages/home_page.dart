@@ -38,12 +38,18 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     var formData = {'lon': '115.02932', 'lat': '35.76189'};
+
     return Scaffold(
         backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
         appBar: AppBar(
           title: Text('百姓生活+'),
         ),
+
+        //
+        //
+        //
         body: FutureBuilder(
           // todo: http 请求数据
           future: request('homePageContext', formData: formData),
@@ -110,26 +116,54 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                   // todo:
                   //
                   children: <Widget>[
+                    //
+                    // todo: 首页轮播商品
+                    //
                     SwiperDiy(swiperDataList: swiperDataList), //页面顶部轮播组件
+
+                    //////////////////////////////////////////////////////////////////////////////////////////
+
+                    //
+                    // todo: 头部商品分类, 实现方式?? provider 做了什么? 效果怎么达到的? 跳转第二个 tab???
+                    //  这个组件有点特殊, 实现方式
+                    //
                     TopNavigator(navigatorList: navigatorList), //导航组件
+
+                    //////////////////////////////////////////////////////////////////////////////////////////
+
+                    // todo: 广告
                     AdBanner(advertesPicture: advertesPicture),
+
+                    // todo: 唤醒手机拨号界面 - 使用第三方 lib
                     LeaderPhone(leaderImage: leaderImage, leaderPhone: leaderPhone), //广告组件
 
                     //
-                    // todo: 推荐
+                    // todo: 推荐商品
                     //
                     Recommend(recommendList: recommendList),
+
+                    //
+                    // todo: 中秋
+                    //
                     FloorTitle(picture_address: floor1Title),
                     FloorContent(floorGoodsList: floor1),
+
+                    // todo: 国庆
                     FloorTitle(picture_address: floor2Title),
                     FloorContent(floorGoodsList: floor2),
+
+                    // todo: 团员惠
                     FloorTitle(picture_address: floor3Title),
                     FloorContent(floorGoodsList: floor3),
+
+                    //////////////////////////////////////////////////////////////////////////////////////////
 
                     //
                     // todo: 火热专区 - 异步下拉加载写法.
                     //
                     _hotGoods(),
+
+                    //////////////////////////////////////////////////////////////////////////////////////////
                   ],
                 ),
 
@@ -273,6 +307,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
 // 首页轮播组件编写
 class SwiperDiy extends StatelessWidget {
+  // todo: 组件需要的数据 list
   final List swiperDataList;
 
   SwiperDiy({Key key, this.swiperDataList}) : super(key: key);
@@ -281,18 +316,36 @@ class SwiperDiy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      //
+      // todo: size
+      //
       height: ScreenUtil().setHeight(333),
       width: ScreenUtil().setWidth(750),
+
+      //
+      // todo: 轮播组件
+      //
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
+            //
+            // todo: 点击事件 - 页面跳转
+            //
             onTap: () {
               Application.router.navigateTo(context, "/detail?id=${swiperDataList[index]['goodsId']}");
             },
+
+            //
+            //
+            //
             child: Image.network("${swiperDataList[index]['image']}", fit: BoxFit.fill),
           );
         },
         itemCount: swiperDataList.length,
+
+        //
+        // todo: 分页
+        //
         pagination: new SwiperPagination(),
         autoplay: true,
       ),
@@ -309,20 +362,53 @@ class TopNavigator extends StatelessWidget {
   Widget _gridViewItemUI(BuildContext context, item, index) {
     // print('------------------${item}');
     return InkWell(
+      //
+      // todo: 点击事件响应
+      //
       onTap: () {
+        //
+        // todo: 这里的实现??? 怎么做到的???
+        //
         _goCategory(context, index, item['mallCategoryId']);
       },
+
+      //
+      //
+      //
       child: Column(
-        children: <Widget>[Image.network(item['image'], width: ScreenUtil().setWidth(95)), Text(item['mallCategoryName'])],
+        children: <Widget>[
+          //
+          //
+          Image.network(item['image'], width: ScreenUtil().setWidth(95)),
+
+          //
+          // todo: 分类名称
+          Text(item['mallCategoryName'])
+        ],
       ),
     );
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  // todo: ??? 这里是怎么处理的???
+  //
+
   void _goCategory(context, int index, String categroyId) async {
+    //
+    // todo: http post
+    //
     await request('getCategory').then((val) {
       var data = json.decode(val.toString());
       CategoryModel category = CategoryModel.fromJson(data);
+
       List list = category.data;
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////
+
+      //
+      // todo: provider 管理数据 ???????
+      //
       Provide.value<ChildCategory>(context).changeCategory(categroyId, index);
       Provide.value<ChildCategory>(context).getChildCategory(list[index].bxMallSubDto, categroyId);
       Provide.value<CurrentIndexProvide>(context).changeIndex(1);
@@ -331,21 +417,42 @@ class TopNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
     if (navigatorList.length > 10) {
       navigatorList.removeRange(10, navigatorList.length);
     }
+
+    //
+    //
+    //
     var tempIndex = -1;
+
+    //
+    //
+    //
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: 5.0),
       height: ScreenUtil().setHeight(320),
       padding: EdgeInsets.all(3.0),
+
+      //
+      // todo: 网格
+      //
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 5,
         padding: EdgeInsets.all(4.0),
+
+        //
+        // todo: 网格元素
+        //
         children: navigatorList.map((item) {
           tempIndex++;
+
+          //
+          //
+          //
           return _gridViewItemUI(context, item, tempIndex);
         }).toList(),
       ),
@@ -369,6 +476,7 @@ class AdBanner extends StatelessWidget {
   }
 }
 
+// todo: 唤醒手机拨号界面
 class LeaderPhone extends StatelessWidget {
   final String leaderImage; //店长图片
   final String leaderPhone; //店长电话
@@ -379,7 +487,14 @@ class LeaderPhone extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: InkWell(
+        //
+        // todo: 打开手机拨号面板
+        //
         onTap: _launchURL,
+
+        //
+        //
+        //
         child: Image.network(leaderImage),
       ),
     );
@@ -387,7 +502,13 @@ class LeaderPhone extends StatelessWidget {
 
   void _launchURL() async {
     String url = 'tel:' + leaderPhone;
+
+    //
+    // todo: 第三方 lib 实现, 唤醒手机拨号界面
+    //
     if (await canLaunch(url)) {
+      print('debugX: dial phone No: $url');
+
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -397,6 +518,13 @@ class LeaderPhone extends StatelessWidget {
 
 //商品推荐
 class Recommend extends StatelessWidget {
+  /*
+  * todo:
+  *  - 控件事件 event - onTap()
+  *
+  *
+  * */
+
   final List recommendList;
 
   Recommend({Key key, this.recommendList}) : super(key: key);
@@ -506,7 +634,13 @@ class FloorContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[_firstRow(context), _otherGoods(context)],
+        children: <Widget>[
+          //
+          _firstRow(context),
+
+          //
+          _otherGoods(context)
+        ],
       ),
     );
   }
@@ -538,6 +672,9 @@ class FloorContent extends StatelessWidget {
     return Container(
       width: ScreenUtil().setWidth(375),
       child: InkWell(
+        //
+        //
+        //
         onTap: () {
           Application.router.navigateTo(context, "/detail?id=${goods['goodsId']}");
         },
