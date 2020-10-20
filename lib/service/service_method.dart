@@ -3,6 +3,12 @@ import 'dart:async';
 import 'dart:io';
 import '../config/service_url.dart';
 
+/*
+*
+* todo: 一些 http post API 定义, 获取后端数据. 恰当归类是属于 dao/http. 归类 service 不恰当
+*
+* */
+
 //
 // todo: http 异步加载数据
 //
@@ -42,10 +48,21 @@ Future getHomePageContent() async {
   try {
     print('开始获取首页数据...............');
     Response response;
+
+    //
+    //
     Dio dio = new Dio();
     dio.options.contentType = ContentType.parse("application/x-www-form-urlencoded");
+
+    // todo: http post req
     var formData = {'lon': '115.02932', 'lat': '35.76189'};
+
+    //
+    // todo: async do http post
+    //
     response = await dio.post(servicePath['homePageContext'], data: formData);
+
+    // todo: http resp
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -61,10 +78,17 @@ Future getHomePageBeloConten() async {
   try {
     print('开始获取下拉列表数据.................');
     Response response;
+
     Dio dio = new Dio();
     dio.options.contentType = ContentType.parse("application/x-www-form-urlencoded");
     int page = 1;
+
+    //
+    // todo: do http post
+    //
     response = await dio.post(servicePath['homePageBelowConten'], data: page);
+
+    //
     if (response.statusCode == 200) {
       return response.data;
     } else {

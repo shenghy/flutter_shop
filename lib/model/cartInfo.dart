@@ -1,3 +1,10 @@
+/*
+* todo: model 定义: 数据 json 序列化/反序列化
+*
+*
+* */
+
+// todo: 购物车
 class CartInfoMode {
   String goodsId;
   String goodsName;
@@ -6,8 +13,11 @@ class CartInfoMode {
   String images;
   bool isCheck;
 
-  CartInfoMode(
-      {this.goodsId, this.goodsName, this.count, this.price, this.images,this.isCheck});
+  CartInfoMode({this.goodsId, this.goodsName, this.count, this.price, this.images, this.isCheck});
+
+  //
+  // todo: json 序列化/反序列化
+  //
 
   CartInfoMode.fromJson(Map<String, dynamic> json) {
     goodsId = json['goodsId'];
@@ -25,7 +35,7 @@ class CartInfoMode {
     data['count'] = this.count;
     data['price'] = this.price;
     data['images'] = this.images;
-    data['isCheck']= this.isCheck;
+    data['isCheck'] = this.isCheck;
     return data;
   }
 }
