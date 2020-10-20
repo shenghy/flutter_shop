@@ -45,10 +45,18 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           title: Text('百姓生活+'),
         ),
         body: FutureBuilder(
+
+          // todo: http 请求数据
           future: request('homePageContext', formData: formData),
+
+          //
+          // todo: 构建页面:
+          //    - 有数据: 构建页面.
+          //    - 无数据: 提示数据加载中.
+          //
           builder: (context, snapshot) {
             //
-            //todo: 复杂页面结构
+            //todo: 复杂页面构造
             //
             if (snapshot.hasData) {
               var data = json.decode(snapshot.data.toString());
@@ -85,8 +93,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               // todo: 上拉异步加载实现: 基于 flutter_easyrefresh-1.2.7 包实现
               //
               return EasyRefresh(
+                //
+                // todo: 下拉刷新事件 event
+                //
                 refreshFooter: ClassicsFooter(
-                    key: _footerKey,
+                    key: _footerKey, // todo: 关键参数, 通过 key, 捕捉事件
                     bgColor: Colors.white,
                     textColor: Colors.pink,
                     moreInfoColor: Colors.pink,
@@ -115,6 +126,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                     FloorContent(floorGoodsList: floor2),
                     FloorTitle(picture_address: floor3Title),
                     FloorContent(floorGoodsList: floor3),
+
+                    //
+                    // todo: 火热专区 - 异步下拉加载写法.
+                    //
                     _hotGoods(),
                   ],
                 ),
@@ -125,6 +140,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                 //
                 loadMore: () async {
                   print('开始加载更多');
+                  //
+                  // todo: 分页+异步下拉+刷新技巧, 这个写法.
+                  //
                   var formPage = {'page': page};
 
                   //
@@ -137,7 +155,14 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
                     // todo: 注意
                     setState(() {
+                      //
+                      // todo: 数据获取+写入 list, 这个 list 后续会更新页面列表显示
+                      //
                       hotGoodsList.addAll(newGoodsList);
+
+                      //
+                      // todo: 分页计数
+                      //
                       page++;
                     });
                   });
@@ -174,12 +199,20 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     child: Text('火爆专区'),
   );
 
+
+  //
+  // todo:
+  //
   //火爆专区子项
   Widget _wrapList() {
     if (hotGoodsList.length != 0) {
+      //
+      // todo: list -> map 写法
+      //
       List<Widget> listWidget = hotGoodsList.map((val) {
         return InkWell(
             onTap: () {
+              // todo: 页面跳转
               Application.router.navigateTo(context, "/detail?id=${val['goodsId']}");
             },
             child: Container(
@@ -189,6 +222,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               margin: EdgeInsets.only(bottom: 3.0),
               child: Column(
                 children: <Widget>[
+                  //
+                  // todo: 商品信息: 图片+名称+价格
+                  //
                   Image.network(
                     val['image'],
                     width: ScreenUtil().setWidth(375),
@@ -228,6 +264,10 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         child: Column(
       children: <Widget>[
         hotTitle,
+
+        //
+        // todo: 异步下拉加载
+        //
         _wrapList(),
       ],
     ));
