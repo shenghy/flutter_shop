@@ -31,7 +31,7 @@ dependencies:
   fluttertoast:
   fluro:
   flutter_html:
-  sqflite:
+  sqflite: # not used
   shared_preferences:
 
 

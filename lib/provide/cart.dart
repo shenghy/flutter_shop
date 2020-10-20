@@ -36,7 +36,6 @@ import 'dart:convert';
 *
 * */
 
-
 // todo: 购物车
 class CartProvide with ChangeNotifier {
   String cartString = "[]";
@@ -50,7 +49,6 @@ class CartProvide with ChangeNotifier {
   int allGoodsCount = 0; //商品总数量
   bool isAllCheck = true; //是否全选
 
-
   ///////////////////////////////////////////
   // todo: action 行为定义
   //  - 实现数据修改动作
@@ -61,6 +59,11 @@ class CartProvide with ChangeNotifier {
 
   // todo: action1 - 保存动作
   save(goodsId, goodsName, count, price, images) async {
+    //
+    // todo: app 实现本地持久化 - 读/写
+    //  - 基于 shared_preferences-0.5.12 包
+    //
+
     //初始化SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -107,7 +110,12 @@ class CartProvide with ChangeNotifier {
         'isCheck': true //是否已经选择
       };
       tempList.add(newGoods);
+
+      //
+      // todo: 注意 model 定义位置
+      //
       cartList.add(new CartInfoMode.fromJson(newGoods));
+
       allPrice += (count * price);
       allGoodsCount += count;
     }
@@ -116,6 +124,9 @@ class CartProvide with ChangeNotifier {
     //把字符串进行encode操作，
     cartString = json.encode(tempList).toString();
 
+    //
+    // todo: 注意: 持久化 save()
+    //
     prefs.setString('cartInfo', cartString); //进行持久化
 
     //
@@ -133,10 +144,19 @@ class CartProvide with ChangeNotifier {
     //
     //
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    //
+    // todo: 注意, del 动作
+    //
     //prefs.clear();//清空键值对
     prefs.remove('cartInfo');
 
+    //
+    // todo: 注意
+    //
     cartList = [];
+
+    //
     allPrice = 0;
     allGoodsCount = 0;
     print('清空完成-----------------');
@@ -178,6 +198,9 @@ class CartProvide with ChangeNotifier {
           isAllCheck = false;
         }
 
+        //
+        //
+        //
         cartList.add(new CartInfoMode.fromJson(item));
       });
     }

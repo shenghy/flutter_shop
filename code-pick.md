@@ -36,6 +36,18 @@
 
 ## xxx:
 
+- [lib/pages/details_page/details_web.dart](lib/pages/details_page/details_web.dart)
+- 第三方 lib 应用: 
+
+
+```dart
+
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+```
+
 
 ## xxx:
 
