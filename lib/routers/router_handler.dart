@@ -3,6 +3,9 @@ import 'package:fluro/fluro.dart';
 import '../pages/details_page.dart';
 
 
+//
+// todo: 路由
+//
 Handler detailsHandler =Handler(
   handlerFunc: (BuildContext context,Map<String,List<String>> params){
     String goodsId = params['id'].first;

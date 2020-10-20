@@ -45,7 +45,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           title: Text('百姓生活+'),
         ),
         body: FutureBuilder(
-
           // todo: http 请求数据
           future: request('homePageContext', formData: formData),
 
@@ -97,7 +96,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                 // todo: 下拉刷新事件 event
                 //
                 refreshFooter: ClassicsFooter(
-                    key: _footerKey, // todo: 关键参数, 通过 key, 捕捉事件
+                    key: _footerKey,
+                    // todo: 关键参数, 通过 key, 捕捉事件
                     bgColor: Colors.white,
                     textColor: Colors.pink,
                     moreInfoColor: Colors.pink,
@@ -106,7 +106,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                     moreInfo: '加载中',
                     loadReadyText: '上拉加载....'),
                 child: ListView(
-
                   //
                   // todo:
                   //
@@ -133,7 +132,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                     _hotGoods(),
                   ],
                 ),
-
 
                 //
                 // todo: 异步加载
@@ -198,7 +196,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(width: 0.5, color: Colors.black12))),
     child: Text('火爆专区'),
   );
-
 
   //
   // todo:
@@ -409,7 +406,17 @@ class Recommend extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10.0),
       child: Column(
-        children: <Widget>[_titleWidget(), _recommedList(context)],
+        children: <Widget>[
+          //
+          // todo:
+          //
+          _titleWidget(),
+
+          //
+          // todo:
+          //
+          _recommedList(context)
+        ],
       ),
     );
   }
@@ -423,12 +430,17 @@ class Recommend extends StatelessWidget {
         child: Text('商品推荐', style: TextStyle(color: Colors.pink)));
   }
 
+  // todo: 推荐商品列表
   Widget _recommedList(BuildContext context) {
     return Container(
       height: ScreenUtil().setHeight(380),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
+
+        //
+        // todo: 构建商品列表+支持点击跳转到商品详情
+        //
         itemBuilder: (context, index) {
           return _item(index, context);
         },
@@ -436,9 +448,16 @@ class Recommend extends StatelessWidget {
     );
   }
 
+  //
+  //
+  //
   Widget _item(index, context) {
     return InkWell(
+      //
+      // todo: 添加点击事件+响应, 页面跳转->详情页
+      //
       onTap: () {
+        // todo: 页面跳转
         Application.router.navigateTo(context, "/detail?id=${recommendList[index]['goodsId']}");
       },
       child: Container(
@@ -447,6 +466,9 @@ class Recommend extends StatelessWidget {
         decoration: BoxDecoration(color: Colors.white, border: Border(left: BorderSide(width: 0.5, color: Colors.black12))),
         child: Column(
           children: <Widget>[
+            //
+            // todo: 商品信息
+            //
             Image.network(recommendList[index]['image']),
             Text('￥${recommendList[index]['mallPrice']}'),
             Text(
