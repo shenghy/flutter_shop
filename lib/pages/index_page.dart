@@ -28,14 +28,19 @@ class IndexPage extends StatelessWidget {
   final List<Widget> tabBodies = [
     //
     HomePage(),
-    //
-    //
-    CategoryPage(),
-    //
-    //
-    CartPage(),
+
     ///
-    /// todo: 会员中心
+    /// todo: 最复杂的页面(跨控件之间 - 传递数据)
+    ///
+    CategoryPage(),
+
+    ///
+    /// todo: 购物车
+    ///
+    CartPage(),
+
+    ///
+    /// todo: 会员中心(假页面, 细节未实现)
     ///
     MemberPage()
   ];

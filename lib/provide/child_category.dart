@@ -18,6 +18,7 @@ class ChildCategory with ChangeNotifier {
     categoryIndex = index;
     subId = '';
 
+    print('debugX: provider #更改目录: id=$id, index=$index');
     //
     //
     //

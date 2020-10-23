@@ -306,6 +306,9 @@ class CartProvide with ChangeNotifier {
     await getCartInfo();
   }
 
+  ///
+  /// todo:
+  ///
   //增加减少数量的操作
   addOrReduceAction(var cartItem, String todo) async {
     //
@@ -325,13 +328,16 @@ class CartProvide with ChangeNotifier {
       tempIndex++;
     });
 
-    //
-    //
+    ///
+    /// todo: 根据条件, 修改数量
+    ///
     if (todo == 'add') {
       cartItem.count++;
     } else if (cartItem.count > 1) {
       cartItem.count--;
     }
+
+    print('debugX: 购物车商品数量: [$todo], count=${cartItem.count}');
 
     tempList[changeIndex] = cartItem.toJson();
     cartString = json.encode(tempList).toString();

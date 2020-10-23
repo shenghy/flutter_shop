@@ -12,6 +12,10 @@ import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
 import '../routers/application.dart';
 
+///
+///
+/// todo: 整个 app 最复杂的页面, 也是最有价值的页面
+///
 class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
@@ -28,9 +32,22 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Container(
         child: Row(
           children: <Widget>[
+            ///
+            /// todo: 关键 - 纵向 tab
+            ///
             LeftCategoryNav(),
             Column(
-              children: <Widget>[RightCategoryNav(), CategoryGoodsList()],
+              children: <Widget>[
+                ///
+                /// todo: 关键 - 横向 tab
+                ///
+                RightCategoryNav(),
+
+                ///
+                /// todo: 商品上拉加载
+                ///
+                CategoryGoodsList()
+              ],
             )
           ],
         ),
@@ -57,8 +74,14 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
 
   @override
   Widget build(BuildContext context) {
+    ///
+    ///
+    ///
     return Provide<ChildCategory>(
       builder: (context, child, val) {
+        ///
+        ///
+        ///
         _getGoodList(context);
         listIndex = val.categoryIndex;
 
@@ -71,6 +94,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
           child: ListView.builder(
             itemCount: list.length,
             itemBuilder: (context, index) {
+              ///
+              /// todo: 关键
+              ///
               return _leftInkWel(index);
             },
           ),
@@ -79,20 +105,41 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     );
   }
 
+  ///
+  /// todo: 关键
+  ///
   Widget _leftInkWel(int index) {
     bool isClick = false;
     isClick = (index == listIndex) ? true : false;
 
     return InkWell(
+      ///
+      ///
+      ///
+      ///
       onTap: () {
         var childList = list[index].bxMallSubDto;
         var categoryId = list[index].mallCategoryId;
 
-        //
-        //
-        //
+        ///
+        ///
         Provide.value<ChildCategory>(context).changeCategory(categoryId, index);
         Provide.value<ChildCategory>(context).getChildCategory(childList, categoryId);
+
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+
+        print('debugX: category_page._leftInkWel()');
+
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+        print('debugX: | event #onTap');
+
+        ///
+        ///
         _getGoodList(context, categoryId: categoryId);
       },
       child: Container(
@@ -135,17 +182,25 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'page': 1
     };
 
+    ///
+    /// todo: http post:
+    ///
     request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+
+      ///
+      ///
+      ///
       // Provide.value<CategoryGoodsList>(context).getGoodsList(goodsList.data);
       Provide.value<CategoryGoodsListProvide>(context).getGoodsList(goodsList.data);
     });
   }
 }
 
-//右侧小类类别
-
+///
+/// todo: 关键 - 横向 tab 分类 // 右侧小类类别
+///
 class RightCategoryNav extends StatefulWidget {
   _RightCategoryNavState createState() => _RightCategoryNavState();
 }
@@ -162,10 +217,21 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
             height: ScreenUtil().setHeight(80),
             width: ScreenUtil().setWidth(570),
             decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
+
+            ///
+            ///
+            ///
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: childCategory.childCategoryList.length,
+
+              ///
+              ///
+              ///
               itemBuilder: (context, index) {
+                ///
+                ///
+                ///
                 return _rightInkWell(index, childCategory.childCategoryList[index]);
               },
             ));
@@ -173,14 +239,27 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     ));
   }
 
+  ///
+  ///
+  /// todo: 关键 - 横向
+  ///
   Widget _rightInkWell(int index, BxMallSubDto item) {
     bool isCheck = false;
     isCheck = (index == Provide.value<ChildCategory>(context).childIndex) ? true : false;
 
     return InkWell(
+      ///
+      ///
+      /// todo: 事件响应
+      ///
       onTap: () {
-        print(2222222222);
+        print('debugX: | 分类.横向 tab 点击事件 - index=$index, item=${item.mallSubName}');
+
         Provide.value<ChildCategory>(context).changeChildIndex(index, item.mallSubId);
+
+        ///
+        ///
+        ///
         _getGoodList(context, item.mallSubId);
       },
       child: Container(
@@ -195,12 +274,35 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 
   //得到商品列表数据
   void _getGoodList(context, String categorySubId) {
-    var data = {'categoryId': Provide.value<ChildCategory>(context).categoryId, 'categorySubId': categorySubId, 'page': 1};
+    var data = {
+      ///
+      ///
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
 
+      ///
+      ///
+      'categorySubId': categorySubId,
+
+      ///
+      ///
+      'page': 1
+    };
+
+    print('\n\tdebugX: | 更新商品列表 - http req = $data');
+
+    ///
+    /// todo: http post
+    ///
     request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       // Provide.value<CategoryGoodsList>(context).getGoodsList(goodsList.data);
+
+      print('\n\tdebugX: | 更新商品列表 - http resp.size=${goodsList.data.length}');
+
+      ///
+      ///
+      ///
       if (goodsList.data == null) {
         Provide.value<CategoryGoodsListProvide>(context).getGoodsList([]);
       } else {
@@ -225,9 +327,17 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
   @override
   Widget build(BuildContext context) {
+    ///
+    ///
+    ///
     return Provide<CategoryGoodsListProvide>(
+      ///
+      ///
+      ///
       builder: (context, child, data) {
         try {
+          ///
+          ///
           if (Provide.value<ChildCategory>(context).page == 1) {
             scrollController.jumpTo(0.0);
           }
@@ -243,11 +353,18 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                 //
                 width: ScreenUtil().setWidth(570),
 
-                //
-                //
-                //
+                ///
+                ///
+                ///
+                ///
                 child: EasyRefresh(
+                  ///
+                  ///
+                  ///
                   refreshFooter: ClassicsFooter(
+
+                      ///
+                      ///
                       key: _footerKey,
                       bgColor: Colors.white,
                       textColor: Colors.pink,
@@ -256,10 +373,21 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                       noMoreText: Provide.value<ChildCategory>(context).noMoreText,
                       moreInfo: '加载中',
                       loadReadyText: '上拉加载'),
+
+                  ///
+                  ///
+                  ///
                   child: ListView.builder(
                     controller: scrollController,
                     itemCount: data.goodsList.length,
+
+                    ///
+                    ///
+                    ///
                     itemBuilder: (context, index) {
+                      ///
+                      ///
+                      ///
                       return _ListWidget(data.goodsList, index);
                     },
                   ),
@@ -303,7 +431,13 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
 
+      ///
+      /// todo: 代码习惯不好. 对数据的修改, 不应该到处散落. 要收敛到一起.
+      ///
       if (goodsList.data == null) {
+        ///
+        /// todo: 关键代码 - 设置 没有更多了 !!!
+        ///
         Provide.value<ChildCategory>(context).changeNoMore('没有更多了');
       } else {
         Provide.value<CategoryGoodsListProvide>(context).addGoodsList(goodsList.data);
@@ -311,17 +445,35 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     });
   }
 
+  ///
+  ///
+  ///
   Widget _ListWidget(List newList, int index) {
     return InkWell(
+
+        ///
+        /// todo: 点击商品 - 跳转到商品详情页面
+        ///
         onTap: () {
           Application.router.navigateTo(context, "/detail?id=${newList[index].goodsId}");
         },
+
+        ///
+        ///
+        ///
         child: Container(
           padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
           decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(width: 1.0, color: Colors.black12))),
           child: Row(
             children: <Widget>[
+              ///
+              ///
+              ///
               _goodsImage(newList, index),
+
+              ///
+              ///
+              ///
               Column(
                 children: <Widget>[_goodsName(newList, index), _goodsPrice(newList, index)],
               )
