@@ -25,7 +25,20 @@ class IndexPage extends StatelessWidget {
   //
   // todo: 页面
   //
-  final List<Widget> tabBodies = [HomePage(), CategoryPage(), CartPage(), MemberPage()];
+  final List<Widget> tabBodies = [
+    //
+    HomePage(),
+    //
+    //
+    CategoryPage(),
+    //
+    //
+    CartPage(),
+    ///
+    /// todo: 会员中心
+    ///
+    MemberPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +52,43 @@ class IndexPage extends StatelessWidget {
       return Scaffold(
         backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
         bottomNavigationBar: BottomNavigationBar(
+          //
+          //
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
+          //
+          //
+          //
           items: bottomTabs,
 
-          // todo:
+          /////////////////////////////////////////////////////////////////////////////
+          //
+          //
+          // todo: 特别注意! provider 只是改变了数据 index, 就实现了 页面跳转 !!!
+          // todo: 特别注意! provider 只是改变了数据 index, 就实现了 页面跳转 !!!
+          //
+          //
           onTap: (index) {
+            //
+            // todo: 只是更改了 index 值, 就实现了 tab 页面跳转???
             //
             Provide.value<CurrentIndexProvide>(context).changeIndex(index);
           },
+
+          /////////////////////////////////////////////////////////////////////////////
         ),
-        body: IndexedStack(index: currentIndex, children: tabBodies),
+
+        //
+        // todo: 点击 tab, 跳转的页面
+        //
+        body: IndexedStack(
+            //
+            //
+            index: currentIndex,
+            //
+            // todo: 跳转页面
+            //
+            children: tabBodies),
       );
     });
   }

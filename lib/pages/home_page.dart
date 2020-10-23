@@ -411,6 +411,10 @@ class TopNavigator extends StatelessWidget {
       //
       Provide.value<ChildCategory>(context).changeCategory(categroyId, index);
       Provide.value<ChildCategory>(context).getChildCategory(list[index].bxMallSubDto, categroyId);
+
+      //
+      // todo: 这个 provider, 实现 tab 页面跳转, 切换到分类页(tab2) !!!
+      //
       Provide.value<CurrentIndexProvide>(context).changeIndex(1);
     });
   }

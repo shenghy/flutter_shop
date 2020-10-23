@@ -1,3 +1,8 @@
+
+
+///
+///
+///
 class DetailsModel {
   String code;
   String message;
@@ -22,6 +27,9 @@ class DetailsModel {
   }
 }
 
+///
+///
+///
 class DetailsGoodsData {
   GoodInfo goodInfo;
   List<GoodComments> goodComments;

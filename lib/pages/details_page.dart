@@ -51,12 +51,26 @@ class DetailsPage extends StatelessWidget {
                   children: <Widget>[
                     ListView(
                       children: <Widget>[
+                        ///
+                        ///
+                        ///
                         DetailsTopArea(),
+                        ///
+                        ///
+                        ///
                         DetailsExplain(),
+                        ///
+                        ///
+                        ///
                         DetailsTabBar(),
                         DetailsWeb(),
                       ],
                     ),
+
+
+                    //
+                    //
+                    //
                     Positioned(bottom: 0, left: 0, child: DetailsBottom())
                   ],
                 );
