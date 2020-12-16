@@ -69,3 +69,11 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+
+################################
+
+
+# add 2020.
+.fvm/flutter_sdk
+.flutter-plugins-dependencies

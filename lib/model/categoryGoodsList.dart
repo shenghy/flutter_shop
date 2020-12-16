@@ -6,6 +6,9 @@ class CategoryGoodsListModel {
   CategoryGoodsListModel({this.code, this.message, this.data});
 
   CategoryGoodsListModel.fromJson(Map<String, dynamic> json) {
+
+    print('debugX: category goods list: $json');
+
     code = json['code'];
     message = json['message'];
     if (json['data'] != null) {

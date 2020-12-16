@@ -1,3 +1,93 @@
+
+
+# hotfix: 
+
+- 指定 flutter 版本: `1.17.5`
+- 修复编译报错: 依赖包版本问题
+
+## 一些代码阅读笔记: 
+
+- [code pick](./code-pick.md)
+- 一些功能写法参考.
+- 要点: 
+    - [x] 路由包使用
+    - [x] http (dio) 包使用
+    - [x] 跨组件数据传递方式: 基于 provide.
+    - [x] 下拉加载页面.
+- 最有价值的页面: 商品分类页(跨组件数据传递).
+    - 其他页面没啥特别. 
+    - 代码风格和习惯不好, 可以改进的点很多.
+
+
+## 运行: 
+
+```bash 
+
+flutter run 
+
+```
+
+## 修复编译报错:
+
+- flutter 版本: 使用 fvm 管理 flutter 版本. 
+
+```bash
+
+-> % flutter --version
+Flutter 1.17.5 • channel unknown • unknown source
+Framework • revision 8af6b2f038 (4 months ago) • 2020-06-30 12:53:55 -0700
+Engine • revision ee76268252
+Tools • Dart 2.8.4
+
+
+{
+  "flutterSdkVersion": "1.17.5"
+}
+
+```
+
+- fix service url: lib/config/service_url.dart
+
+```dart
+
+//const serviceUrl= 'http://v.jspang.com:8088/baixing/';
+const serviceUrl= 'https://wxmini.baixingliangfan.cn/baixing/';
+//const serviceUrl= 'http://test.baixingliangfan.cn/baixing/';
+
+
+```
+
+## notes: 
+
+- 代码跟踪: 
+
+```bash
+
+- lib/main.dart
+    - lib/pages/index_page.dart  // 底部 tab bar 导航栏
+        - lib/pages/home_page.dart // 首页
+        - lib/pages/category_page.dart // 分类页
+
+```
+
+
+
+
+🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
+
+🚀
+
+🚀               分割线
+
+🚀
+
+🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
+
+
+
+
+
+
 # Flutter的移动电商实战
 
 项目和教程都在更新中............
